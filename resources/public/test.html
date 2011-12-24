@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+
+<html> 
+  <head> 
+    <meta charset="utf-8" /> 
+	
+    <!-- Set the viewport width to device width for mobile --> 
+    <meta name="viewport" content="width=device-width" /> 
+    
+    <title>Welcome to Foundation</title> 
+    
+    <!-- Included CSS Files --> 
+    <link rel="stylesheet" href="stylesheets/foundation.css"> 
+    <link rel="stylesheet" href="stylesheets/app.css"> 
+    
+    <!--[if lt IE 9]>
+	<link rel="stylesheet" href="stylesheets/ie.css">
+	<![endif]--> 
+    
+	
+    <!-- IE Fix for HTML5 Tags --> 
+    <!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]--> 
+     
+  </head> 
+  <body> 
+    <!-- container --> 
+    <div class="container">     
+      <div class="row"> 
+	<div class="twelve columns"> 
+	  <h2>Produkt katalog</h2> 
+	  <p>This is version 2.0.3 released on October 31, 2011</p> 	    
+	  <hr /> 
+          <dl class="nice tabs"> 
+	    <dd><a href="#simple1" class="active" onclick="javascript:getUrl('simple1Tab','test2.html');">Produkter</a></dd> 
+	    <dd><a href="#simple2" onclick="javascript:getUrl('simple2Tab','test2.html');">Services</a></dd> 
+	    <dd><a href="#simple3" onclick="javascript:getUrl('simple3Tab','test2.html');">Hardware</a></dd> 
+	  </dl> 
+	  
+	  <ul class="tabs-content"> 
+	    <li class="active" id="simple1Tab">This is simple tab 1's content. Pretty neat, huh?</li> 
+	    <li id="simple2Tab">This is simple tab 2's content. Now you see it!</li> 
+	    <li id="simple3Tab">This is simple tab 3's content. It's, you know...okay.</li> 
+	  </ul> 
+	</div> 
+      </div> 
+    </div>
+    <!-- container --> 
+	
+    <!-- Included JS Files --> 
+    <script src="javascripts/foundation.js"></script> 
+    <script src="javascripts/app.js"></script> 
+    <script>
+      function getUrl(id,url) {  
+        document.getElementById(id).innerHTML = "<iframe src='" + url + "'></iframe>";
+      }
+    </script>
+  </body>
+</html>
+		
+                

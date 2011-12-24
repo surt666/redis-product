@@ -1,0 +1,1 @@
+(cljsc/build "src/cs" {:optimizations :advanced :output-dir "out" :output-to "resources/public/javascripts/client.js"})
