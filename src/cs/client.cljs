@@ -11,7 +11,7 @@
   (let [json (. (aget e "target") (getResponseJson))
         data (js->clj json :keywordize-keys true) 
         elem (dom/getElement elem-id)
-        d (dom/htmlToDocumentFragment (str "<span>" (:varenr data) " " (:navn data) "</span>"))]
+        d (dom/htmlToDocumentFragment (str "<span>" (:varenr data) "</span>&nbsp;<span>" (:navn data) "</span>"))]
     ;;((js* "alert") elem-id)
     (dom/removeChildren elem)
     (dom/insertChildAt elem d 0)))
