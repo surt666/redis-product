@@ -25,6 +25,7 @@
      
   </head> 
   <body> 
+    <script src="javascripts/client.js"></script>
     <!-- container --> 
     <div class="container">     
       <div class="row"> 
@@ -33,9 +34,9 @@
 	  <p>This is version 2.0.3 released on October 31, 2011</p> 	    
 	  <hr /> 
           <dl class="nice tabs"> 
-	    <dd><a href="#simple1" class="active" onclick="javascript:getUrl('simple1Tab','test2.html');">Produkter</a></dd> 
-	    <dd><a href="#simple2" onclick="javascript:getUrl('simple2Tab','test2.html');">Services</a></dd> 
-	    <dd><a href="#simple3" onclick="javascript:getUrl('simple3Tab','test2.html');">Hardware</a></dd> 
+	    <dd><a href="#simple1" class="active" onclick="javascript:client.get_htmlfile_as_string('simple1Tab','test2.html');client.main();">Produkter</a></dd> 
+	    <dd><a href="#simple2" onclick="javascript:client.get_htmlfile_as_string('simple2Tab','test2.html');client.main();">Services</a></dd> 
+	    <dd><a href="#simple3" onclick="javascript:client.get_htmlfile_as_string('simple3Tab','test2.html');client.main();">Hardware</a></dd> 
 	  </dl> 
 	  
 	  <ul class="tabs-content"> 
@@ -50,12 +51,7 @@
 	
     <!-- Included JS Files --> 
     <script src="javascripts/foundation.js"></script> 
-    <script src="javascripts/app.js"></script> 
-    <script>
-      function getUrl(id,url) {  
-        document.getElementById(id).innerHTML = "<iframe src='" + url + "'></iframe>";
-      }
-    </script>
+    <script src="javascripts/app.js"></script>     
   </body>
 </html>
 		
