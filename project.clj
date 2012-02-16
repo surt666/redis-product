@@ -8,9 +8,8 @@
                  [ring/ring-servlet "1.0.0" :exclusions [javax.servlet/servlet-api]]                
                  [org.slf4j/slf4j-simple "1.6.1"]
                  [org.freemarker/freemarker "2.3.18"]
-                 [com.draines/postal "1.7-SNAPSHOT"]
-                 [yousee-common "1.0.27"]
-                 [ring-common "1.1.1"]
+                 [com.draines/postal "1.7-SNAPSHOT" :exclusions [org.clojure.contrib/repl-utils]]
+                 [yousee-common "1.0.42"]
                  [log4j "1.2.16" :exclusions [javax.mail/mail
                                               javax.jms/jms
                                               com.sun.jdmk/jmxtools

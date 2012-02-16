@@ -1,11 +1,9 @@
 (ns redis-product.routes
   (:use compojure.core
-        ring.util.response
         ring.middleware.resource
         ring.middleware.file-info
         redis-product.core
-        yousee-common.wrappers
-        ring.commonrest
+        redis-product.mail
         yousee-common.web)
   (:require [compojure.route :as route]
             [compojure.handler :as handler]            
