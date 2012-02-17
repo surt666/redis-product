@@ -1,24 +1,53 @@
 <html>
   <head>
     <title>Message GUI</title>
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
     <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/ckeditor/adapters/jquery.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#editor").ckeditor();
+        $("#gem").click(function() {
+          var msg = $("#editor").val();
+          var wf = $("#workflow").val();
+          var data = {"msg" : msg, "workflow" : wf};
+          $.ajax({
+                  type: "POST",
+                  accepts: "application/json",        
+                  cache: false,
+                  contentType: "text/plain", 
+                  url: "/message/template",
+                  dataType: "json",
+                  data: JSON.stringify(data),
+                  error: function(request,error){
+                    alert(error);
+                  },
+                  success: function(result) {
+ 	            alert("Data saved");
+                  }
+                 });
+        });
+      });
+    </script>
   </head>
   <body>
     <form method="post">
       <p>
-	My Editor:<br />
-	<textarea id="editor1" name="editor1">&lt;p&gt;Initial value.&lt;/p&gt;</textarea>
-	<script type="text/javascript">
-	  CKEDITOR.replace( 'editor1' );
-	</script>
+	Skriv template:<br />
+	<textarea id="editor">Initial value.</textarea>
       </p>
       <p>
-	<input type="submit" />
+        Beskriv workflow:<br />
+        <textarea id="workflow" name="workflow" cols="60" rows="15">(condp = (sendmail data)
+        :bounce (condp = (sendsms data)
+                  :bounce (sendspoc data))
+        :ok (prn "mail ok"))</textarea>
+      </p>
+      <p>
+	<input type="button" value="Gem" id="gem" />
       </p>
     </form>
   </body>
 </html>
 
-<script type="text/javascript">
-  var editor_data = CKEDITOR.instances.editor1.getData();
-</script>
+
