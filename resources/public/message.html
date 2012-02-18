@@ -10,7 +10,8 @@
         $("#gem").click(function() {
           var msg = $("#editor").val();
           var wf = $("#workflow").val();
-          var data = {"msg" : msg, "workflow" : wf};
+          var name = $("#name").val();
+          var data = {"msg" : msg, "workflow" : wf, "name" : name};
           $.ajax({
                   type: "POST",
                   accepts: "application/json",        
@@ -38,10 +39,14 @@
       </p>
       <p>
         Beskriv workflow:<br />
-        <textarea id="workflow" name="workflow" cols="60" rows="15">(condp = (sendmail data)
-        :bounce (condp = (sendsms data)
-                  :bounce (sendspoc data))
-        :ok (prn "mail ok"))</textarea>
+        <textarea id="workflow" name="workflow" cols="60" rows="15">(condp = (sendmail)
+        :bounce (condp = (sendsms)
+                  :bounce (sendspoc))
+        :ok :ok)</textarea>
+      </p>
+      <p>
+        Navngiv message flow:<br />
+        <input type="text" id="name" />
       </p>
       <p>
 	<input type="button" value="Gem" id="gem" />

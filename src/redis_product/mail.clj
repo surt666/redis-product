@@ -20,46 +20,66 @@
 
 (declare ^:dynamic sendmail)
 
-(defn sendmail []
-  (let [res (send-message #^{:host "smtp.gmail.com"
-                             :user "steen666"
-                             :pass ""
-                             :ssl :yes!!!11}
-                          {:from (:from *data*)
-                           :to (:to *data*)
-                           :subject (:subject *data*)
-                           :body [{:type "text/html" :content *message*}]})]
-    (if (= 0 (:code res))
-      :ok
-      :bounce)))
+(declare ^:dynamic sendsms)
 
-(defn sendsms []
-  (prn "send sms"))
+;; (defn sendmail2 []
+;;   (let [res (send-message #^{:host "smtp.gmail.com"
+;;                              :user "steen666"
+;;                              :pass "madball#666"
+;;                              :ssl :yes!!!11}
+;;                           {:from (:from *data*)
+;;                            :to (:to *data*)
+;;                            :subject (:subject *data*)
+;;                            :body [{:type "text/html" :content *message*}]})]
+;;     (if (= 0 (:code res))
+;;       :ok
+;;       :bounce)))
 
-(defn sendspoc []
-  (prn "send to spoc"))
+;; (defn sendsms []
+;;   (prn "send sms"))
 
-(defmacro my-eval [s] `~(read-string s))
+;; (defn sendspoc []
+;;   (prn "send to spoc"))
 
-(defn wf1 [] (condp = (sendmail)
-               :bounce (condp = (sendsms)
-                         :bounce (sendspoc))
-               :ok :ok))
+;; (defmacro my-eval [s] `~(read-string s))
+
+;; (defn wf1 [] (condp = (sendmail)
+;;                :bounce (condp = (sendsms)
+;;                          :bounce (sendspoc))
+;;                :ok :ok))
+
+                                        ;(load-file (str template-dir "/test3.wf"))
+
+(defn create-var
+  ([sym] (intern *ns* sym))
+  ([sym val] (intern *ns* sym val)))
 
 (defn merge-and-send [data]
   (let [temp (. config (getTemplate (str (:template data) ".ftl")))       
         wf (slurp (str template-dir "/" (:template data) ".wf"))
         out (StringWriter.)
         _ (. temp (process (stringify-keys (:data data)) out))
-        mailbody (str out)]    
-    (binding [*message* mailbody
-              *data* data]      
-      (let [res (wf1)]
-        {:status (if (= :ok res) 204 404)}))))
+        mailbody (str out)]        
+    (create-var 'sendmail (fn [] (let [res (send-message #^{:host "smtp.gmail.com"
+                                                            :user "steen666"
+                                                            :pass ""
+                                                            :ssl :yes!!!11}
+                                                         {:from (:from data)
+                                                          :to (:to data)
+                                                          :subject (:subject data)
+                                                          :body [{:type "text/html" :content mailbody}]})]
+                                   (if (= 0 (:code res))
+                                     :ok
+                                     :bounce))))
+    (create-var 'sendsms (fn [] (prn "send sms")))
+    (create-var 'sendspoc (fn [] (prn "send spoc")))
+    (let [res (load-string wf)]
+      {:status (if (= :ok res) 204 404)})))
 
 (defn save [data]
-  (spit "/home/sla/templates/test2.ftl" (str "[#ftl]\n" (:msg data)))
-  (spit "/home/sla/templates/test2.wf" (:workflow data)))
+  (let [name (:name data)]
+    (spit (str "/home/sla/templates/" name ".ftl") (str "[#ftl]\n" (:msg data)))
+    (spit (str "/home/sla/templates/" name ".wf") (:workflow data))))
 
 (comment "{\"template\" : \"test.flt\",
   \"from\" : \"stel@yousee.dk\",
