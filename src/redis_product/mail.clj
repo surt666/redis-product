@@ -14,42 +14,6 @@
 
 (def config (configuration))
 
-(declare ^:dynamic *message*)
-
-(declare ^:dynamic *data*)
-
-(declare ^:dynamic sendmail)
-
-(declare ^:dynamic sendsms)
-
-;; (defn sendmail2 []
-;;   (let [res (send-message #^{:host "smtp.gmail.com"
-;;                              :user "steen666"
-;;                              :pass "madball#666"
-;;                              :ssl :yes!!!11}
-;;                           {:from (:from *data*)
-;;                            :to (:to *data*)
-;;                            :subject (:subject *data*)
-;;                            :body [{:type "text/html" :content *message*}]})]
-;;     (if (= 0 (:code res))
-;;       :ok
-;;       :bounce)))
-
-;; (defn sendsms []
-;;   (prn "send sms"))
-
-;; (defn sendspoc []
-;;   (prn "send to spoc"))
-
-;; (defmacro my-eval [s] `~(read-string s))
-
-;; (defn wf1 [] (condp = (sendmail)
-;;                :bounce (condp = (sendsms)
-;;                          :bounce (sendspoc))
-;;                :ok :ok))
-
-                                        ;(load-file (str template-dir "/test3.wf"))
-
 (defn create-var
   ([sym] (intern *ns* sym))
   ([sym val] (intern *ns* sym val)))
@@ -62,7 +26,7 @@
         mailbody (str out)]        
     (create-var 'sendmail (fn [] (let [res (send-message #^{:host "smtp.gmail.com"
                                                             :user "steen666"
-                                                            :pass ""
+                                                            :pass "m"
                                                             :ssl :yes!!!11}
                                                          {:from (:from data)
                                                           :to (:to data)
