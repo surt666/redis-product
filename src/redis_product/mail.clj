@@ -5,7 +5,7 @@
   (:import [freemarker.template Configuration DefaultObjectWrapper]
            [java.io StringWriter File BufferedWriter FileWriter]))
 
-(def template-dir "/home/sla/templates")
+(def template-dir "/home/m00522/templates")
 
 (defn configuration []
   (doto (Configuration.)
@@ -42,12 +42,12 @@
 
 (defn save [data]
   (let [name (:name data)]
-    (spit (str "/home/sla/templates/" name ".ftl") (str "[#ftl]\n" (:msg data)))
-    (spit (str "/home/sla/templates/" name ".wf") (:workflow data))))
+    (spit (str template-dir "/" name ".ftl") (str "[#ftl]\n" (:msg data)))
+    (spit (str template-dir "/" name ".wf") (:workflow data))))
 
-(comment "{\"template\" : \"test.flt\",
-  \"from\" : \"stel@yousee.dk\",
-  \"to\" \"steen666@gmail.com\", 
-  \"subject\" : \"Yousee kvittering\", 
-  \"data\" : {\"user\" : \"Steen Larsen\",
-            \"animals\" : [{\"name\" : \"abe\", \"price\" : \"100\"}, {\"name\" : \"hund\", \"price\" : \"200\"}]}}")
+(comment {"template" : "test.flt",
+  "from" : "stel@yousee.dk",
+  "to" "steen666@gmail.com", 
+  "subject" : "Yousee kvittering", 
+  "data" : {"user" : "Steen Larsen",
+            "animals" : [{"name" : "abe", "price" : "100"}, {"name" : "hund", "price" : "200"}]}})
