@@ -45,9 +45,9 @@
     (spit (str template-dir "/" name ".ftl") (str "[#ftl]\n" (:msg data)))
     (spit (str template-dir "/" name ".wf") (:workflow data))))
 
-(comment {"template" : "test.flt",
-  "from" : "stel@yousee.dk",
-  "to" "steen666@gmail.com", 
-  "subject" : "Yousee kvittering", 
-  "data" : {"user" : "Steen Larsen",
-            "animals" : [{"name" : "abe", "price" : "100"}, {"name" : "hund", "price" : "200"}]}})
+(comment "{\"template\" : \"test.flt\",
+  \"from\" : \"stel@yousee.dk\",
+  \"to\" \"steen666@gmail.com\", 
+  \"subject\" : \"Yousee kvittering\", 
+  \"data\" : {\"user\" : \"Steen Larsen\",
+            \"animals\" : [{\"name\" : \"abe\", \"price\" : \"100\"}, {\"name\" : \"hund\", \"price\" : \"200\"}]}}")
