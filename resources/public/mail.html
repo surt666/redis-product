@@ -1,0 +1,81 @@
+<!DOCTYPE html> 
+
+<html> 
+  <head> 
+    <meta charset="utf-8" /> 
+	
+    <!-- Set the viewport width to device width for mobile --> 
+    <meta name="viewport" content="width=device-width" /> 
+    
+    <title>Mail</title> 
+    
+    <!-- Included CSS Files --> 
+    <link rel="stylesheet" href="stylesheets/foundation.css"> 
+    <link rel="stylesheet" href="stylesheets/app.css"> 
+    <script src="javascripts/client.js"></script> 
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <!--script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/ckeditor/adapters/jquery.js"></script-->
+    <script type="text/javascript" src="/tinymce/jscripts/tiny_mce/tiny_mce.js"></script> 
+    <script type="text/javascript">
+      client.get_htmlfile_as_string('nice1Tab','message.html');
+      client.get_htmlfile_as_string('nice2Tab','preview.html');
+      tinyMCE.init({
+        theme : "advanced",
+        mode : "specific_textareas",
+        editor_selector : "editor",
+        plugins : "fullpage",
+        theme_advanced_buttons3_add : "fullpage"
+      });
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        /*$("#editor").ckeditor();*/
+        $("#gem").click(function() {
+          var ed = tinyMCE.get('editor');
+          var msg = ed.getContent(); /* $("#editor").val();         */
+          var wf = $("#workflow").val();
+          var name = $("#name").val();
+          var data = {"msg" : msg, "workflow" : wf, "name" : name};
+          $.ajax({
+                  type: "POST",
+                  accepts: "application/json",        
+                  cache: false,
+                  contentType: "text/plain", 
+                  url: "/message/template",
+                  dataType: "json",
+                  data: JSON.stringify(data),
+                  error: function(request,error){
+                    alert(error);
+                  },
+                  success: function(result) {
+ 	            alert("Data saved");
+                  }
+                 });
+        });
+      });
+    </script>   
+  </head> 
+  <body>     
+    <!-- container --> 
+    <div class="container">     
+      <div class="row"> 
+	<div class="twelve columns"> 	
+          <dl class="nice contained tabs"> 
+	    <dd><a href="#nice1" class="active">Opret Template</a></dd> 
+	    <dd><a href="#nice2">Preview</a></dd> 	    
+	  </dl> 	  
+	  <ul class="nice tabs-content contained"> 
+	    <li id="nice1Tab" class="active">This is simple tab 1's content. Pretty neat, huh?</li> 
+	    <li id="nice2Tab">This is simple tab 2's content. Now you see it!</li> 	     
+	  </ul> 
+	</div> 
+      </div> 
+    </div>
+    <!-- container --> 
+	
+    <!-- Included JS Files --> 
+    <script src="javascripts/foundation.js"></script> 
+    <script src="javascripts/app.js"></script>     
+  </body>
+</html>
