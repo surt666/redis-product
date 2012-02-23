@@ -18,6 +18,8 @@
     <script type="text/javascript" src="/ckeditor/adapters/jquery.js"></script-->
     <script type="text/javascript" src="/tinymce/jscripts/tiny_mce/tiny_mce.js"></script> 
     <script type="text/javascript">
+      client.get_htmlfile_as_string('nice1Tab','message.html');
+      client.get_htmlfile_as_string('nice2Tab','preview.html');
       tinyMCE.init({
         theme : "advanced",
         mode : "specific_textareas",
@@ -59,13 +61,13 @@
     <div class="container">     
       <div class="row"> 
 	<div class="twelve columns"> 	
-          <dl class="nice tabs"> 
-	    <dd><a href="#simple1" onclick="javascript:client.get_htmlfile_as_string('simple1Tab','message.html');">Templates</a></dd> 
-	    <dd><a href="#simple2"  class="active" onclick="javascript:client.get_htmlfile_as_string('simple2Tab','preview.html');">Preview</a></dd> 	    
+          <dl class="nice contained tabs"> 
+	    <dd><a href="#nice1" class="active">Opret Template</a></dd> 
+	    <dd><a href="#nice2">Preview</a></dd> 	    
 	  </dl> 	  
-	  <ul class="tabs-content"> 
-	    <li id="simple1Tab">This is simple tab 1's content. Pretty neat, huh?</li> 
-	    <li class="active" id="simple2Tab">This is simple tab 2's content. Now you see it!</li> 	     
+	  <ul class="nice tabs-content contained"> 
+	    <li id="nice1Tab" class="active">This is simple tab 1's content. Pretty neat, huh?</li> 
+	    <li id="nice2Tab">This is simple tab 2's content. Now you see it!</li> 	     
 	  </ul> 
 	</div> 
       </div> 
