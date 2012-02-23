@@ -26,7 +26,7 @@
         mailbody (str out)]        
     (create-var 'sendmail (fn [] (let [res (send-message #^{:host "smtp.gmail.com"
                                                             :user "steen666"
-                                                            :pass "m"
+                                                            :pass "madball#666"
                                                             :ssl :yes!!!11}
                                                          {:from (:from data)
                                                           :to (:to data)
