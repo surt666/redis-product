@@ -1,54 +1,23 @@
-<html>
-  <head>
-    <title>Message GUI</title>
-    <script type="text/javascript" src="/javascripts/jquery.js"></script>
-    <!--script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript" src="/ckeditor/adapters/jquery.js"></script-->
-    <script type="text/javascript" src="/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-    <script type="text/javascript">
-      tinyMCE.init({
-        theme : "advanced",
-        mode : "specific_textareas",
-        editor_selector : "editor",
-        plugins : "fullpage",
-        theme_advanced_buttons3_add : "fullpage"
-      });
-    </script>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        /*$("#editor").ckeditor();*/
-        $("#gem").click(function() {
-          var ed = tinyMCE.get('editor');
-          var msg = ed.getContent(); /* $("#editor").val();         */
-          var wf = $("#workflow").val();
-          var name = $("#name").val();
-          var data = {"msg" : msg, "workflow" : wf, "name" : name};
-          $.ajax({
-                  type: "POST",
-                  accepts: "application/json",        
-                  cache: false,
-                  contentType: "text/plain", 
-                  url: "/message/template",
-                  dataType: "json",
-                  data: JSON.stringify(data),
-                  error: function(request,error){
-                    alert(error);
-                  },
-                  success: function(result) {
- 	            alert("Data saved");
-                  }
-                 });
-        });
-      });
-    </script>
-  </head>
-  <body>
-    <form method="post">
+<form method="post">
+  <div class="row">
+    <div class="eight columns">    
       <p>
 	Skriv template:<br />
 	<textarea id="editor" class="editor" cols="80" rows="25">Initial value.</textarea>
-      </p>
-      <p>
+      </p>     
+    </div>
+    <div class="four columns"> 
+    <p>Load Template:<br />
+      <select id="template" size="24">
+        <option>temp1</option>
+        <option>test2</option>
+        <option>ordrebekraeftelses-mail</option>
+      </select>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="twelve columns"> 
+    <p>
         Beskriv workflow:<br />
         <textarea id="workflow" name="workflow" cols="60" rows="15">(condp = (sendmail)
         :bounce (condp = (sendsms)
@@ -60,10 +29,12 @@
         <input type="text" id="name" />
       </p>
       <p>
-	<input type="button" value="Gem" id="gem" />
-      </p>
-    </form>
-  </body>
-</html>
+        <a href="#" id="gem" class="nice small radius blue button">Gem</a>
+	<!--input type="button" value="Gem" id="gem" /-->
+      </p> 
+    </div>
+  </div>      
+</form> 
+    
 
 
