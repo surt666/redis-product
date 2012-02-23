@@ -5,7 +5,7 @@
   (:import [freemarker.template Configuration DefaultObjectWrapper]
            [java.io StringWriter File BufferedWriter FileWriter]))
 
-(def template-dir "/home/m00522/templates")
+(def template-dir "/home/sla/templates")
 
 (defn configuration []
   (doto (Configuration.)
@@ -26,7 +26,7 @@
         mailbody (str out)]        
     (create-var 'sendmail (fn [] (let [res (send-message #^{:host "smtp.gmail.com"
                                                             :user "steen666"
-                                                            :pass "madball#666"
+                                                            :pass "m"
                                                             :ssl :yes!!!11}
                                                          {:from (:from data)
                                                           :to (:to data)
