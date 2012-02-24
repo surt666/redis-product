@@ -7,11 +7,7 @@
     </div>
     <div class="four columns"> 
       Vælg Template:<br />
-      <select id="template" size="23">
-        <option>temp1</option>
-        <option>test2</option>
-        <option>ordrebekraeftelses-mail</option>
-      </select>
+      <select id="ptemplate" size="23"></select>
     </div>
   </div>  
   <div class="row">
@@ -20,3 +16,35 @@
     </div>
   </div>
 </form>
+<script type="text/javascript">
+  $.get("/message/loadtemplates", function(data) {
+    var ptemplates = "";
+    for (var i=0; i < data.length; i++) { 
+      ptemplates = ptemplates + '<option>' + data[i] + '</option>';        
+    }
+    $('#ptemplate').html(ptemplates);
+  });
+  $(document).ready(function() {    
+    $("#preview").click(function() {
+      var data = $("#data").val();     
+      var temp = $("#ptemplate").val();
+      var dd = {"data" : eval(data),  "template" : temp};      
+      $.ajax({
+        type: "POST",
+        accepts: "application/json",        
+        cache: false,
+        contentType: "text/plain", 
+        url: "/message/merge",
+        dataType: "json",
+        data: JSON.stringify(dd),
+        error: function(request,error){
+          alert(error);
+        },
+        success: function(result) {
+          window.open("", "mywindow1", "status=1,width=350,height=150");
+          my_window.document.write(result);
+        }
+      });
+    });
+   });
+</script>

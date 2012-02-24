@@ -3,9 +3,9 @@
         [clojure.data.json :only (read-json json-str)]
         [clojure.walk :only (stringify-keys keywordize-keys)])
   (:import [freemarker.template Configuration DefaultObjectWrapper]
-           [java.io StringWriter File BufferedWriter FileWriter]))
+           [java.io StringWriter File BufferedWriter FileWriter FileNotFoundException]))
 
-(def template-dir "/home/sla/templates")
+(def template-dir "/home/m00522/templates")
 
 (defn configuration []
   (doto (Configuration.)
@@ -40,10 +40,31 @@
     (let [res (load-string wf)]
       {:status (if (= :ok res) 204 404)})))
 
+(defn mergemail [data]  
+  (let [temp (. config (getTemplate (str (:template data) ".ftl")))       
+        out (StringWriter.)
+        _ (. temp (process (stringify-keys (:data data)) out))]
+    (str out)))
+
 (defn save [data]
   (let [name (:name data)]
     (spit (str template-dir "/" name ".ftl") (str "[#ftl]\n" (:msg data)))
     (spit (str template-dir "/" name ".wf") (:workflow data))))
+
+(defn as-file [s]
+  "Return whatever we have as a java.io.File object"
+  (cond (instance? File s) s   ; already a file, return unchanged
+        (string? s) (File. s)  ; return java.io.File for path s
+        :else (throw (FileNotFoundException. (str s)))))
+
+(defn walk [^File dir]
+  (let [children (.listFiles dir)
+        subdirs (filter #(.isDirectory %) children)
+        files (filter #(.isFile %) children)]
+    (concat files (mapcat walk subdirs))))
+
+(defn load-templates []
+  (map #(get (re-find #"(.+)\.ftl" %) 1) (filter #(re-find #".+\.ftl" %) (map #(.getName %) (walk (as-file template-dir))))))
 
 (comment "{\"template\" : \"test.flt\",
   \"from\" : \"stel@yousee.dk\",

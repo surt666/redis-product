@@ -8,11 +8,7 @@
     </div>
     <div class="four columns"> 
     <p>Load Template:<br />
-      <select id="template" size="24">
-        <option>temp1</option>
-        <option>test2</option>
-        <option>ordrebekraeftelses-mail</option>
-      </select>
+      <select id="templates" size="24"></select>
     </div>
   </div>  
   <div class="row">
@@ -37,38 +33,45 @@
 </form> 
 <script type="text/javascript">      
   tinyMCE.init({
-  theme : "advanced",
-  mode : "specific_textareas",
-  editor_selector : "editor",
-  plugins : "fullpage",
-  theme_advanced_buttons3_add : "fullpage"
+    theme : "advanced",
+    mode : "specific_textareas",
+    editor_selector : "editor",
+    plugins : "fullpage",
+    theme_advanced_buttons3_add : "fullpage"
+  });
+  $.get("/message/loadtemplates", function(data) {
+    var templates = "";
+    for (var i=0; i < data.length; i++) { 
+      templates = templates + '<option>' + data[i] + '</option>';        
+    }
+    $('#templates').html(templates);
   });
 
-      $(document).ready(function() {
-        /*$("#editor").ckeditor();*/
-        $("#gem").click(function() {
-          var ed = tinyMCE.get('editor');
-          var msg = ed.getContent(); /* $("#editor").val();         */
-          var wf = $("#workflow").val();
-          var name = $("#name").val();
-          var data = {"msg" : msg, "workflow" : wf, "name" : name};
-          $.ajax({
-                  type: "POST",
-                  accepts: "application/json",        
-                  cache: false,
-                  contentType: "text/plain", 
-                  url: "/message/template",
-                  dataType: "json",
-                  data: JSON.stringify(data),
-                  error: function(request,error){
-                    alert(error);
-                  },
-                  success: function(result) {
- 	            alert("Data saved");
-                  }
-                 });
-        });
-      });
+  $(document).ready(function() {
+    /*$("#editor").ckeditor();*/
+    $("#gem").click(function() {
+    var ed = tinyMCE.get('editor');
+    var msg = ed.getContent(); /* $("#editor").val();         */
+    var wf = $("#workflow").val();
+    var name = $("#name").val();
+    var data = {"msg" : msg, "workflow" : wf, "name" : name};
+    $.ajax({
+      type: "POST",
+      accepts: "application/json",        
+      cache: false,
+      contentType: "text/plain", 
+      url: "/message/template",
+      dataType: "json",
+      data: JSON.stringify(data),
+      error: function(request,error){
+        alert(error);
+      },
+      success: function(result) {
+        alert("Data saved");
+      }
+    });
+  });
+});
 </script>
     
 
