@@ -1,7 +1,8 @@
 (ns redis-product.mail
-  (:use postal.core
+  (:use postal.core        
         [clojure.data.json :only (read-json json-str)]
         [clojure.walk :only (stringify-keys keywordize-keys)])
+  (:require [clojure.string :as string])
   (:import [freemarker.template Configuration DefaultObjectWrapper]
            [java.io StringWriter File BufferedWriter FileWriter FileNotFoundException]))
 
@@ -42,9 +43,9 @@
 
 (defn mergemail [data]  
   (let [temp (. config (getTemplate (str (:template data) ".ftl")))       
-        out (StringWriter.)
+        out (StringWriter.)     
         _ (. temp (process (stringify-keys (:data data)) out))]
-    (str out)))
+    (string/replace (str out) #"\n" "")))
 
 (defn save [data]
   (let [name (:name data)]

@@ -28,17 +28,17 @@
     $("#preview").click(function() {
       var data = $("#data").val();     
       var temp = $("#ptemplate").val();
-      var dd = {"data" : eval(data),  "template" : temp};      
+      var dd = {"data" : JSON.parse(data),  "template" : temp};      
       $.ajax({
         type: "POST",
         accepts: "application/json",        
         cache: false,
-        contentType: "text/plain", 
+        contentType: "text/html", 
         url: "/message/merge",
         dataType: "json",
         data: JSON.stringify(dd),
-        error: function(request,error){
-          alert(error);
+        error: function(request,error, errorThrown){
+          alert("FEJL " + error + " " + errorThrown + " " + JSON.stringify(request));
         },
         success: function(result) {
           window.open("", "mywindow1", "status=1,width=350,height=150");

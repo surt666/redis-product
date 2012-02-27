@@ -24,7 +24,7 @@
 
   (POST ["/:context/merge" , :context #".[^/]*"] req        
         (let [res (mergemail (parse-body (:body req)))]
-          {:status 200 :body res}))
+          {:status 200 :body res :headers {"Content-Type" "text/html"}}))
   
   (POST ["/:context/send" , :context #".[^/]*"] req
         (merge-and-send (parse-body (:body req)))))
